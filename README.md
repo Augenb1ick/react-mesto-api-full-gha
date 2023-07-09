@@ -10,7 +10,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 158.160.50.151
+IP-адрес <51.250.50.118>
 
 Frontend https://mesto.react.practicum.nomoredomains.work
 
