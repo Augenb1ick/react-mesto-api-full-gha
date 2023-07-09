@@ -26,7 +26,7 @@ class Api {
 
   editProfileInfo(data) {
     return fetch(`${this._baseUrl}/users/me`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
         name: data.name,
@@ -37,7 +37,7 @@ class Api {
 
   editAvatar(data) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
         avatar: data.avatar,
@@ -47,7 +47,7 @@ class Api {
 
   postCard(cardData) {
     return fetch(`${this._baseUrl}/cards`, {
-      method: "POST",
+      method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
         name: cardData.name,
@@ -58,7 +58,7 @@ class Api {
 
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: this._headers,
     }).then((res) => this._checkResponse(res));
   }
@@ -66,12 +66,12 @@ class Api {
   changeLikeCardStatus(cardId, isLiked) {
     if (isLiked) {
       return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-        method: "PUT",
+        method: 'PUT',
         headers: this._headers,
       }).then((res) => this._checkResponse(res));
     } else {
       return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-        method: "DELETE",
+        method: 'DELETE',
         headers: this._headers,
       }).then((res) => this._checkResponse(res));
     }
@@ -79,9 +79,9 @@ class Api {
 }
 
 export const api = new Api({
-  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-63",
+  baseUrl: 'https://api.mesto.react.practicum.nomoredomains.work',
   headers: {
-    authorization: "ea85f908-fad7-4aa4-beb6-cef41fe19df2",
-    "Content-Type": "application/json",
+    authorization: `Bearer ${localStorage.getItem('jwt')}`,
+    'Content-Type': 'application/json',
   },
 });
