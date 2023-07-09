@@ -49,9 +49,6 @@ function App() {
           setIsLoggedIn(true);
           setUserEmail(res.email);
           navigate("/", { replace: true });
-        })
-        .catch((err) => {
-          console.log(err);
         });
     }
   }, []);
@@ -194,7 +191,6 @@ function App() {
         }
         setIsRegSuccess(false);
         setIsInfoTooltipOpen(true);
-        console.log(err);
       });
   }
 
@@ -217,7 +213,6 @@ function App() {
         }
         setIsRegSuccess(false);
         setIsInfoTooltipOpen(true);
-        console.log(err);
       });
   }
 
