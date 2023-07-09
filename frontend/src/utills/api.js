@@ -81,7 +81,7 @@ class Api {
 export const api = new Api({
   baseUrl: 'https://api.mesto.react.practicum.nomoredomains.work',
   headers: {
-    authorization: `Bearer ${localStorage.getItem('jwt')}`,
+    authorization: localStorage.getItem('jwt'),
     'Content-Type': 'application/json',
   },
 });
