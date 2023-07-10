@@ -1,4 +1,5 @@
 const httpConstants = require('http2').constants;
+const { default: mongoose } = require('mongoose');
 const Card = require('../models/card');
 
 const NotFoundError = require('../errors/not-found-err');
@@ -17,7 +18,7 @@ const createCard = (req, res, next) => {
   Card.create({ name, link, owner })
     .then((card) => res.status(httpConstants.HTTP_STATUS_CREATED).send(card))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err instanceof mongoose.Error.ValidationError) {
         return next(new BadRequestError('Переданы некорректные данные при создании карточки.'));
       }
       return next(err);
@@ -38,7 +39,7 @@ const deleteCard = (req, res, next) => {
       return card.deleteOne().then(() => res.send({ message: 'Карточка удалена.' }));
     })
     .catch((err) => {
-      if (err.name === 'CastError') {
+      if (err instanceof mongoose.Error.CastError) {
         return next(new BadRequestError('Передан некорректный _id для удаления карточки.'));
       }
       return next(err);
@@ -54,7 +55,7 @@ const likeCard = (req, res, next) => {
       return res.send(cards);
     })
     .catch((err) => {
-      if (err.name === 'CastError') {
+      if (err instanceof mongoose.Error.CastError) {
         return next(new BadRequestError('Переданы некорректные данные для постановки лайка.'));
       }
       return next(err);
@@ -70,7 +71,7 @@ const dislikeCard = (req, res, next) => {
       return res.send(cards);
     })
     .catch((err) => {
-      if (err.name === 'CastError') {
+      if (err instanceof mongoose.Error.CastError) {
         return next(new BadRequestError('Переданы некорректные данные для снятия лайка.'));
       }
       return next(err);
