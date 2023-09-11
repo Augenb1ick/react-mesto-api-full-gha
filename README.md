@@ -39,13 +39,6 @@ cd react-mesto-api-full
 npm install
 ```
 
-## Планы по доработке:
-
-- Добавить типизацию на TypeScript
-- Переписать запросы на Async/Await (ES7)
-- Рефакторинг стилей на Sass / Styled Components
-- Добавить Redux или MobX для стейт менеджмента
-
 ## CLI:
 
 Бэкенд:
@@ -62,6 +55,13 @@ npm run lint // Запуск ESLint
 npm run start // Запуск dev сервера
 npm run build // Сборка проекта
 ```
+
+## Планы по доработке:
+
+- Добавить типизацию на TypeScript
+- Переписать запросы на Async/Await (ES7)
+- Рефакторинг стилей на Sass / Styled Components
+- Добавить Redux или MobX для стейт менеджмента
 
 ## Ссылки:
 
