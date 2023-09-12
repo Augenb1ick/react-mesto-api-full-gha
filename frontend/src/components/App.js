@@ -1,24 +1,24 @@
-import { useState, useEffect } from "react";
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 
-import Header from "./Header";
-import Main from "./Main";
-import Footer from "./Footer";
-import ImagePopup from "./ImagePopup";
-import EditProfilePopup from "./EditProfilePopup";
-import EditAvatarPopup from "./EditAvatarPopup";
-import AddPlacePopup from "./AddPlacePopup";
-import DeleteCardPopup from "./DeleteCardPopup";
-import Login from "./Login";
-import Register from "./Register";
-import InfoTooltip from "./InfoTooltip";
+import Header from './Header';
+import Main from './Main';
+import Footer from './Footer';
+import ImagePopup from './ImagePopup';
+import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
+import DeleteCardPopup from './DeleteCardPopup';
+import Login from './Login';
+import Register from './Register';
+import InfoTooltip from './InfoTooltip';
 
-import ProtectedRouteElement from "./ProtectedRoute";
+import ProtectedRouteElement from './ProtectedRoute';
 
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-import { api } from "../utills/api";
-import * as auth from "../utills/auth";
+import { api } from '../utills/api';
+import * as auth from '../utills/auth';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -27,7 +27,7 @@ function App() {
   const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
-  const [userEmail, setUserEmail] = useState("");
+  const [userEmail, setUserEmail] = useState('');
   const [isRendering, setIsRendering] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -36,20 +36,18 @@ function App() {
 
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [isRegSuccess, setIsRegSuccess] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
+    const jwt = localStorage.getItem('jwt');
     if (jwt) {
-      auth
-        .checkToken(jwt)
-        .then((res) => {
-          setIsLoggedIn(true);
-          setUserEmail(res.email);
-          navigate("/", { replace: true });
-        });
+      auth.checkToken(jwt).then((res) => {
+        setIsLoggedIn(true);
+        setUserEmail(res.email);
+        navigate('/', { replace: true });
+      });
     }
   }, []);
 
@@ -174,20 +172,20 @@ function App() {
 
   function handleLoginSubmit(data) {
     auth
-      .authorize(data.password, data.email)
+      .authorize(data.password, data.email.toLowerCase())
       .then((res) => {
         if (res) {
-          localStorage.setItem("jwt", res.token);
-          setUserEmail(data.email);
+          localStorage.setItem('jwt', res.token);
+          setUserEmail(data.email.toLowerCase());
           setIsLoggedIn(true);
-          navigate("/", { replace: true });
+          navigate('/', { replace: true });
         }
       })
       .catch((err) => {
-        if (err === "Ошибка: 401") {
-          setErrorMessage("Логин или пароль указаны неверно!");
+        if (err === 'Ошибка: 401') {
+          setErrorMessage('Логин или пароль указаны неверно!');
         } else {
-          setErrorMessage("Что-то пошло не так! Попробуйте ещё раз.");
+          setErrorMessage('Что-то пошло не так! Попробуйте ещё раз.');
         }
         setIsRegSuccess(false);
         setIsInfoTooltipOpen(true);
@@ -201,15 +199,15 @@ function App() {
         if (res) {
           setIsRegSuccess(true);
           setIsInfoTooltipOpen(true);
-          navigate("/sign-in", { replace: true });
+          navigate('/sign-in', { replace: true });
         }
       })
       .catch((err) => {
         setIsInfoTooltipOpen(true);
-        if (err === "Ошибка: 400") {
-          setErrorMessage("Пользователь с таким email уже зарегистрирован!");
+        if (err === 'Ошибка: 400') {
+          setErrorMessage('Пользователь с таким email уже зарегистрирован!');
         } else {
-          setErrorMessage("Что-то пошло не так! Попробуйте ещё раз.");
+          setErrorMessage('Что-то пошло не так! Попробуйте ещё раз.');
         }
         setIsRegSuccess(false);
         setIsInfoTooltipOpen(true);
@@ -217,19 +215,19 @@ function App() {
   }
 
   function handleSignOut() {
-    localStorage.removeItem("jwt");
+    localStorage.removeItem('jwt');
     setIsLoggedIn(false);
-    navigate("/", { replace: true });
-    setUserEmail("");
+    navigate('/', { replace: true });
+    setUserEmail('');
   }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <div className="root">
+      <div className='root'>
         <Header userEmail={userEmail} onSignOut={handleSignOut} />
         <Routes>
           <Route
-            path="/"
+            path='/'
             element={
               <ProtectedRouteElement
                 element={Main}
@@ -246,24 +244,24 @@ function App() {
             }
           />
           <Route
-            path="/"
+            path='/'
             element={
               isLoggedIn ? (
-                <Navigate to="/" replace />
+                <Navigate to='/' replace />
               ) : (
-                <Navigate to="/sign-in" replace />
+                <Navigate to='/sign-in' replace />
               )
             }
           />
           <Route
-            path="/sign-in"
+            path='/sign-in'
             element={<Login onSubmit={handleLoginSubmit} />}
           />
           <Route
-            path="/sign-up"
+            path='/sign-up'
             element={<Register onSubmit={handleRegistrationSubmit} />}
           />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path='*' element={<Navigate to='/' replace />} />
         </Routes>
         <Footer />
       </div>
@@ -272,7 +270,7 @@ function App() {
         onClose={closeAllPopups}
         isRegSuccess={isRegSuccess}
         errorMessage={errorMessage}
-        successMessage={"Вы успешно зарегистрировались"}
+        successMessage={'Вы успешно зарегистрировались'}
       />
       <EditProfilePopup
         isOpen={isEditProfilePopupOpen}
