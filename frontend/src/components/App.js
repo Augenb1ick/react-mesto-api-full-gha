@@ -172,11 +172,11 @@ function App() {
 
   function handleLoginSubmit(data) {
     auth
-      .authorize(data.password, data.email.toLowerCase())
+      .authorize(data.password, data.email)
       .then((res) => {
         if (res) {
           localStorage.setItem('jwt', res.token);
-          setUserEmail(data.email.toLowerCase());
+          setUserEmail(data.email);
           setIsLoggedIn(true);
           navigate('/', { replace: true });
         }
